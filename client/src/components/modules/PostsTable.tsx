@@ -10,6 +10,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Typography,
 } from "@mui/material";
 import { AppDispatch, RootState } from "../../state/store";
 import { getPosts, deletePost, Post } from "../../state/postSlice";
@@ -51,8 +52,12 @@ const PostsTable = () => {
   };
 
   return (
-    <Paper className="p-4">
-      <div className="flex gap-4">
+    <>
+      <Paper className="p-4">
+        <Typography variant="h6" gutterBottom>
+          Filtro
+        </Typography>
+
         <TextField
           id="post-name"
           label="Buscar por Nombre"
@@ -62,39 +67,50 @@ const PostsTable = () => {
           onChange={handleInputChange}
           value={filterInput}
         />
-      </div>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">Nombre</TableCell>
-            <TableCell align="center">Descripción</TableCell>
-            <TableCell align="center">Acción</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filteredPosts.length > 0 &&
-            filteredPosts.map((post) => (
-              <TableRow
-                key={post.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {post.title}
-                </TableCell>
-                <TableCell>{post.description}</TableCell>
-                <TableCell align="right">
-                  <Button
-                    variant="contained"
-                    onClick={() => handleDeleteClick(post.id)}
-                  >
-                    Eliminar
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </Paper>
+      </Paper>
+      <Paper className="p-4">
+        <Typography variant="h6" gutterBottom>
+          Posts
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ fontWeight: "bold" }} align="left">
+                Nombre
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }} align="left">
+                Descripción
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }} align="center">
+                Acción
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredPosts.length > 0 &&
+              filteredPosts.map((post) => (
+                <TableRow
+                  key={post.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {post.title}
+                  </TableCell>
+                  <TableCell>{post.description}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      onClick={() => handleDeleteClick(post.id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </>
   );
 };
 
